@@ -24,6 +24,7 @@ public class DemoApplication {
             Book book = new Book();
             book.setTitle("1408");
             book.setAuthor("S.King");
+            book.setIsbn("What is this");
             book.setPrice(BigDecimal.valueOf(142));
             bookService.save(book);
             System.out.println(bookService.findAll());
