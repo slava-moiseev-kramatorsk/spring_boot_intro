@@ -1,7 +1,6 @@
 package com.example.demo;
 
 import java.math.BigDecimal;
-
 import lombok.RequiredArgsConstructor;
 import model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +13,7 @@ import service.BookService;
 @SpringBootApplication
 @RequiredArgsConstructor
 public class DemoApplication {
-    @Autowired
-    private BookService bookService;
+    private final BookService bookService;
 
     public static void main(String[] args) {
         SpringApplication.run(DemoApplication.class, args);
