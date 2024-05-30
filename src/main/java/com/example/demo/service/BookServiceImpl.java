@@ -1,10 +1,10 @@
-package service;
+package com.example.demo.service;
 
 import java.util.List;
-import model.Book;
+import com.example.demo.model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import repository.BookRepository;
+import com.example.demo.repository.BookRepository;
 
 @Service
 public class BookServiceImpl implements BookService {

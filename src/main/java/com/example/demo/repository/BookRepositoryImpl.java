@@ -1,7 +1,7 @@
-package repository;
+package com.example.demo.repository;
 
 import java.util.List;
-import model.Book;
+import com.example.demo.model.Book;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;

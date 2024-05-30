@@ -2,13 +2,12 @@ package com.example.demo;
 
 import java.math.BigDecimal;
 import lombok.RequiredArgsConstructor;
-import model.Book;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.demo.model.Book;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import service.BookService;
+import com.example.demo.service.BookService;
 
 @SpringBootApplication
 @RequiredArgsConstructor
