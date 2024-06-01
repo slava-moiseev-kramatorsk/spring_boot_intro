@@ -1,13 +1,13 @@
 package com.example.demo;
 
+import com.example.demo.model.Book;
+import com.example.demo.service.BookService;
 import java.math.BigDecimal;
 import lombok.RequiredArgsConstructor;
-import com.example.demo.model.Book;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import com.example.demo.service.BookService;
 
 @SpringBootApplication
 @RequiredArgsConstructor
