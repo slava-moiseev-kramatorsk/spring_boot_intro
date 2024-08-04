@@ -24,11 +24,11 @@ public class Book {
     private Long id;
     @Column(nullable = false)
     private String title;
-    @Column(name = "author", nullable = false)
+    @Column(nullable = false)
     private String author;
-    @Column(name = "isbn", nullable = false, unique = true)
+    @Column(nullable = false, unique = true)
     private String isbn;
-    @Column(name = "price", nullable = false)
+    @Column(nullable = false)
     private BigDecimal price;
     private String description;
     private String coverImage;
