@@ -1,6 +1,7 @@
 package com.example.demo.dto;
 
 import com.example.demo.validation.Author;
+import com.example.demo.validation.Description;
 import com.example.demo.validation.Isbn;
 import com.example.demo.validation.Title;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -27,6 +28,7 @@ public class CreateBookRequestDto {
     private String isbn;
     @Positive
     private BigDecimal price;
+    @Description
     private String description;
     private String coverImage;
 }
