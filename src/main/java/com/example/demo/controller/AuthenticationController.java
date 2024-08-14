@@ -17,14 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Users management", description = "Endpoints for users management")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/auth")
+@RequestMapping("/auth")
 public class AuthenticationController {
     private final UserService userService;
 
-    @PostMapping(value = "/registration")
+    @PostMapping("/registration")
     @Operation(summary = "Add new user", description = "Add new user to DB")
     @ResponseStatus(HttpStatus.CREATED)
     public UserResponseDto register(@RequestBody @Valid UserRegistrationRequestDto requestDto) {
         return userService.register(requestDto);
-        }
+    }
 }

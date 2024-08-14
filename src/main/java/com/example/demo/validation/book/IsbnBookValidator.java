@@ -8,7 +8,10 @@ public class IsbnBookValidator implements ConstraintValidator<Isbn, String> {
     private static final int REGEX_ISBN_BOOK_LENGTH = 100;
 
     @Override
-    public boolean isValid(String inputIsbn, ConstraintValidatorContext constraintValidatorContext) {
+    public boolean isValid(
+            String inputIsbn,
+            ConstraintValidatorContext constraintValidatorContext
+    ) {
         return inputIsbn.matches(REGEX_ISBN_BOOK)
                 && inputIsbn.length() < REGEX_ISBN_BOOK_LENGTH;
     }

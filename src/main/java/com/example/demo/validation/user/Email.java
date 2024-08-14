@@ -1,9 +1,7 @@
 package com.example.demo.validation.user;
 
-import com.example.demo.validation.book.AuthorValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

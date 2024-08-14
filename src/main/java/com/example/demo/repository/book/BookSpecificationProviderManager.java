@@ -1,9 +1,9 @@
 package com.example.demo.repository.book;
 
-import java.util.List;
 import com.example.demo.model.Book;
 import com.example.demo.repository.SpecificationProvider;
 import com.example.demo.repository.SpecificationProviderManager;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +17,7 @@ public class BookSpecificationProviderManager implements SpecificationProviderMa
         return bookSpecificationProviders.stream()
                 .filter(p -> p.getKey().equals(key))
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("Can`t find correct provider for key " + key));
+                .orElseThrow(() ->
+                        new RuntimeException("Can`t find correct provider for key " + key));
     }
 }
