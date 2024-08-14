@@ -1,4 +1,4 @@
-package com.example.demo.validation;
+package com.example.demo.validation.book;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
@@ -7,11 +7,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Constraint(validatedBy = DescriptionValidator.class)
+@Constraint(validatedBy = AuthorValidator.class)
 @Target({ElementType.PARAMETER, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Description {
-    String message() default "Invalid description of book";
+public @interface Author {
+    String message() default "Invalid author name";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

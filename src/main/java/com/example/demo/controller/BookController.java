@@ -1,14 +1,13 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.BookDto;
-import com.example.demo.dto.BookSearchParameters;
-import com.example.demo.dto.CreateBookRequestDto;
-import com.example.demo.service.BookService;
-import java.util.List;
-
+import com.example.demo.dto.book.BookDto;
+import com.example.demo.dto.book.BookSearchParameters;
+import com.example.demo.dto.book.CreateBookRequestDto;
+import com.example.demo.service.book.BookService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;

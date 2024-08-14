@@ -1,4 +1,4 @@
-package com.example.demo.validation;
+package com.example.demo.validation.user;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
@@ -7,11 +7,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Constraint(validatedBy = AuthorValidator.class)
+@Constraint(validatedBy = EmailValidator.class)
 @Target({ElementType.PARAMETER, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Author {
-    String message() default "Invalid author name";
+public @interface Email {
+    String message() default "Invalid email pattern";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

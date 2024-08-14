@@ -1,8 +1,8 @@
 package com.example.demo.repository.book.spec;
 
-import java.util.Arrays;
 import com.example.demo.model.Book;
 import com.example.demo.repository.SpecificationProvider;
+import java.util.Arrays;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +16,7 @@ public class TitleSpecificationProvider implements SpecificationProvider<Book> {
     }
 
     public Specification<Book> getSpecification(String[] params) {
-        return (root, query, criteriaBuilder) -> root.get(TITLE_KEY).in(Arrays.stream(params).toArray());
+        return (root, query, criteriaBuilder)
+                -> root.get(TITLE_KEY).in(Arrays.stream(params).toArray());
     }
 }

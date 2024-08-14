@@ -1,17 +1,14 @@
-package com.example.demo.dto;
+package com.example.demo.dto.book;
 
-import com.example.demo.validation.Author;
-import com.example.demo.validation.Description;
-import com.example.demo.validation.Isbn;
-import com.example.demo.validation.Title;
+import com.example.demo.validation.book.Author;
+import com.example.demo.validation.book.Description;
+import com.example.demo.validation.book.Isbn;
+import com.example.demo.validation.book.Title;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import lombok.Data;
-
 import java.math.BigDecimal;
+import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
