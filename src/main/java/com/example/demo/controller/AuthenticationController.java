@@ -1,7 +1,10 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.user.UserLoginRequestDto;
+import com.example.demo.dto.user.UserLoginResponseDto;
 import com.example.demo.dto.user.UserRegistrationRequestDto;
 import com.example.demo.dto.user.UserResponseDto;
+import com.example.demo.security.AuthenticationService;
 import com.example.demo.service.user.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -20,6 +23,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 public class AuthenticationController {
     private final UserService userService;
+    private final AuthenticationService authenticationService;
+
+    @PostMapping("/login")
+    public UserLoginResponseDto login(@RequestBody UserLoginRequestDto requestDto) {
+        return authenticationService.authenticate(requestDto);
+
+    }
 
     @PostMapping("/registration")
     @Operation(summary = "Add new user", description = "Add new user to DB")
