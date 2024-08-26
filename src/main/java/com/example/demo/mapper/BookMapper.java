@@ -20,6 +20,9 @@ public interface BookMapper {
     @Mapping(target = "categories", ignore = true)
     Book toModel(CreateBookRequestDto requestDto);
 
+    @Mapping(target = "categories", ignore = true)
+    void updateBookFromDto(CreateBookRequestDto book, @MappingTarget Book entity);
+
     @AfterMapping
     default void setCategoryIds(@MappingTarget BookDto bookDto,Book book) {
         if (book.getCategories() != null) {

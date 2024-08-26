@@ -5,10 +5,13 @@ import com.example.demo.dto.book.BookSearchParameters;
 import com.example.demo.dto.book.CreateBookRequestDto;
 import com.example.demo.mapper.BookMapper;
 import com.example.demo.model.Book;
+import com.example.demo.model.Category;
 import com.example.demo.repository.book.BookRepository;
 import com.example.demo.repository.book.BookSpecificationBuilder;
+import com.example.demo.repository.category.CategoryRepository;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -20,10 +23,14 @@ public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
     private final BookSpecificationBuilder bookSpecificationBuilder;
+    private final CategoryRepository categoryRepository;
 
     @Override
     public BookDto save(CreateBookRequestDto requestDto) {
+        Set<Category> categories = (Set<Category>) categoryRepository
+                .findAllById(requestDto.getCategoriesIds());
         Book book = bookMapper.toModel(requestDto);
+        book.setCategories(categories);
         return bookMapper.toDto(bookRepository.save(book));
     }
 
@@ -59,5 +66,16 @@ public class BookServiceImpl implements BookService {
         return bookRepository.getBooksByCategoryId(id, pageable).stream()
                 .map(bookMapper::toDto)
                 .toList();
+    }
+
+    @Override
+    public BookDto updateById(Long id, CreateBookRequestDto bookDto) {
+        Set<Category> categories = (Set<Category>) categoryRepository
+                .findAllById(bookDto.getCategoriesIds());
+        Book book = bookRepository.findById(id).orElseThrow(() ->
+                new EntityNotFoundException("Can not find entity by id: " + id));
+        book.setCategories(categories);
+        bookMapper.updateBookFromDto(bookDto, book);
+        return bookMapper.toDto(bookRepository.save(book));
     }
 }
