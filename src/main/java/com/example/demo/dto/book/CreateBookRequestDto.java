@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import java.math.BigDecimal;
+import java.util.Set;
 import lombok.Data;
 
 @Data
@@ -28,4 +29,5 @@ public class CreateBookRequestDto {
     @Description
     private String description;
     private String coverImage;
+    private Set<Long> categoriesIds;
 }
