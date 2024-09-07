@@ -9,6 +9,7 @@ import com.example.demo.model.Role;
 import com.example.demo.model.User;
 import com.example.demo.repository.role.RoleRepository;
 import com.example.demo.repository.user.UserRepository;
+import com.example.demo.service.shoppingcart.ShoppingCartService;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,6 +22,7 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
+    private final ShoppingCartService shoppingCartService;
 
     @Override
     public UserResponseDto register(UserRegistrationRequestDto requestDto) {
@@ -29,14 +31,15 @@ public class UserServiceImpl implements UserService {
             + " already exist");
         }
         Role userRole = roleRepository
-                .findByRole(Role.RoleName.USER)
+                .findByRole(Role.RoleName.ROLE_USER)
                 .orElseThrow(() ->
                         new EntityNotFoundException("Can't find role: "
-                                + Role.RoleName.USER));
+                                + Role.RoleName.ROLE_USER));
         User user = userMapper.toModel(requestDto);
         user.setPassword(passwordEncoder.encode(requestDto.getPassword()));
         user.setRoles(Set.of(userRole));
         userRepository.save(user);
+        shoppingCartService.createCart(user);
         return userMapper.toUserResponseDto(user);
     }
 }

@@ -6,7 +6,6 @@ import com.example.demo.model.User;
 import com.example.demo.service.shoppingcart.ShoppingCartService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -44,7 +43,7 @@ public class ShoppingCartController {
     @PreAuthorize("hasRole('USER')")
     public ShoppingCartDto addCartItems(
             Authentication authentication,
-            @RequestBody @Valid CartItemRequestDto cartItemRequestDto
+            @RequestBody CartItemRequestDto cartItemRequestDto
     ) {
         User user = (User) authentication.getPrincipal();
         return shoppingCartService.save(user.getId(), cartItemRequestDto);
