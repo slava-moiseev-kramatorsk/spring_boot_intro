@@ -31,7 +31,7 @@ public class JwtUtil {
                 .compact();
     }
 
-    public boolean isValidToken(String token) {
+    public boolean isValid(String token) {
         try {
             Jws<Claims> claimsJws = Jwts.parser()
                     .verifyWith(secret)
@@ -44,7 +44,7 @@ public class JwtUtil {
         }
     }
 
-    public String getUserName(String token) {
+    public String getUsername(String token) {
         return getClaimFromToken(token, Claims::getSubject);
     }
 

@@ -28,7 +28,6 @@ public class AuthenticationController {
     @PostMapping("/login")
     public UserLoginResponseDto login(@RequestBody UserLoginRequestDto requestDto) {
         return authenticationService.authenticate(requestDto);
-
     }
 
     @PostMapping("/registration")

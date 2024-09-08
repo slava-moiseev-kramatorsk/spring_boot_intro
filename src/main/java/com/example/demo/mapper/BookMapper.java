@@ -5,12 +5,15 @@ import com.example.demo.dto.book.BookDto;
 import com.example.demo.dto.book.CreateBookRequestDto;
 import com.example.demo.model.Book;
 import com.example.demo.model.Category;
+import jakarta.persistence.EntityNotFoundException;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.Named;
 
 @Mapper(config = MapperConfig.class)
 public interface BookMapper {
@@ -39,5 +42,12 @@ public interface BookMapper {
                 .map(Category::new)
                 .collect(Collectors.toUnmodifiableSet());
         book.setCategories(categories);
+    }
+
+    @Named("bookFromId")
+    default Book bookFromId(Long id) {
+        return Optional.ofNullable(id)
+                .map(Book::new)
+                .orElseThrow(() -> new EntityNotFoundException("Can`t find book by this id " + id));
     }
 }

@@ -46,7 +46,7 @@ public class CategoryController {
 
     @Operation(summary = "Upload all categories",
             description = "Upload all categories from DB")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER')or hasRole('ADMIN')")
     @GetMapping
     public List<CategoryDto> getAll(Pageable pageable) {
         return categoryService.findAll(pageable);
@@ -54,7 +54,7 @@ public class CategoryController {
 
     @Operation(summary = "Find category by id",
             description = "UFind category by id")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER')or hasRole('ADMIN')")
     @GetMapping("/{id}")
     public CategoryDto getCategoryById(@PathVariable Long id) {
         return categoryService.getById(id);
@@ -81,7 +81,7 @@ public class CategoryController {
 
     @Operation(summary = "Find all books by category Id",
             description = "Upload all books by category Id")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER')or hasRole('ADMIN')")
     @GetMapping("/{id}/books")
     public List<BookDto> getBooksByCategoryId(
             @PathVariable @Positive Long id,
