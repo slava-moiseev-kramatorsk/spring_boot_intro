@@ -28,6 +28,10 @@ public class Category {
     @Column(nullable = false)
     private boolean isDeleted;
 
+    public Category() {
+
+    }
+
     public Category(Long id) {
         this.id = id;
     }
