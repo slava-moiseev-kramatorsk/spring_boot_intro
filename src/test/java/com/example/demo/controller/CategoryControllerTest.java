@@ -70,6 +70,10 @@ class CategoryControllerTest {
         }
     }
 
+    @Sql(scripts = "classpath:database/delete-all-categories.sql",
+            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = "classpath:database/delete-all-books_categories.sql",
+            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     @Test
     @DisplayName("Create a new category test")
@@ -99,6 +103,10 @@ class CategoryControllerTest {
         EqualsBuilder.reflectionEquals(expected, actual);
     }
 
+    @Sql(scripts = "classpath:database/delete-all-categories.sql",
+            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = "classpath:database/delete-all-books_categories.sql",
+            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "classpath:database/insert-into-categories.sql",
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @WithMockUser(username = "admin", roles = {"ADMIN"})
@@ -132,6 +140,10 @@ class CategoryControllerTest {
         EqualsBuilder.reflectionEquals(expected, actual);
     }
 
+    @Sql(scripts = "classpath:database/delete-all-categories.sql",
+            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = "classpath:database/delete-all-books_categories.sql",
+            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "classpath:database/insert-into-categories.sql",
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @WithMockUser(username = "admin", roles = {"ADMIN"})
@@ -155,6 +167,10 @@ class CategoryControllerTest {
         EqualsBuilder.reflectionEquals(expected, actual);
     }
 
+    @Sql(scripts = "classpath:database/delete-all-categories.sql",
+            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = "classpath:database/delete-all-books_categories.sql",
+            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "classpath:database/insert-into-categories.sql",
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @WithMockUser(username = "admin", roles = {"ADMIN"})
