@@ -112,6 +112,8 @@ class BookControllerTest {
         EqualsBuilder.reflectionEquals(expected, actual, "id");
     }
 
+    @Sql(scripts = "classpath:database/delete-all-books.sql",
+            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "classpath:database/add-three-books.sql",
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Test
@@ -159,6 +161,8 @@ class BookControllerTest {
 
     @Test
     @WithMockUser(username = "user", roles = {"USER"})
+    @Sql(scripts = "classpath:database/delete-all-books.sql",
+            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "classpath:database/add-three-books.sql",
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @DisplayName("Get book by id from DB")
@@ -184,6 +188,8 @@ class BookControllerTest {
 
     @WithMockUser(username = "admin", roles = {"ADMIN", "USER"})
     @Test
+    @Sql(scripts = "classpath:database/delete-all-books.sql",
+            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "classpath:database/add-three-books.sql",
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @DisplayName("Delete book by id")
