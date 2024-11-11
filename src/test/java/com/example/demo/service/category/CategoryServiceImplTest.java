@@ -25,7 +25,6 @@ import org.springframework.data.domain.Pageable;
 
 @ExtendWith(MockitoExtension.class)
 class CategoryServiceImplTest {
-
     @Mock
     private CategoryMapper categoryMapper;
 

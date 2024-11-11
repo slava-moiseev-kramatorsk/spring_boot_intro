@@ -32,7 +32,6 @@ import org.springframework.data.domain.Pageable;
 
 @ExtendWith(MockitoExtension.class)
 public class BookServiceImplTest {
-
     @Mock
     private BookRepository bookRepository;
     @Mock
@@ -93,32 +92,32 @@ public class BookServiceImplTest {
     @Test
     @DisplayName("Get all books from DB")
     public void findAllBooks_shouldReturnAllBook() {
-        Book book1 = generateFirstBook();
+        Book firstBookbook = generateFirstBook();
         BookDto bookDto1 = new BookDto();
-        bookDto1.setTitle(book1.getTitle());
-        bookDto1.setAuthor(book1.getAuthor());
-        bookDto1.setCategoryIds(book1.getCategories().stream()
+        bookDto1.setTitle(firstBookbook.getTitle());
+        bookDto1.setAuthor(firstBookbook.getAuthor());
+        bookDto1.setCategoryIds(firstBookbook.getCategories().stream()
                 .map(Category::getId)
                 .collect(Collectors.toSet()));
-        Book book2 = generateSecondBook();
+        Book secondBook = generateSecondBook();
         BookDto bookDto2 = new BookDto();
-        bookDto2.setAuthor(book2.getAuthor());
-        bookDto2.setTitle(book2.getTitle());
-        bookDto2.setCategoryIds(book2.getCategories().stream()
+        bookDto2.setAuthor(secondBook.getAuthor());
+        bookDto2.setTitle(secondBook.getTitle());
+        bookDto2.setCategoryIds(secondBook.getCategories().stream()
                 .map(Category::getId)
                 .collect(Collectors.toSet()));
 
         Pageable pageable = PageRequest.of(0, 10);
-        Page<Book> page = new PageImpl<>(List.of(book1, book2), pageable, 2);
+        Page<Book> page = new PageImpl<>(List.of(firstBookbook, secondBook), pageable, 2);
 
         when(bookRepository.findAll(pageable)).thenReturn(page);
-        when(bookMapper.toDto(book1)).thenReturn(bookDto1);
-        when(bookMapper.toDto(book2)).thenReturn(bookDto2);
+        when(bookMapper.toDto(firstBookbook)).thenReturn(bookDto1);
+        when(bookMapper.toDto(secondBook)).thenReturn(bookDto2);
 
         final List<BookDto> actual = bookService.findAll(pageable);
         verify(bookRepository,times(1)).findAll(pageable);
-        verify(bookMapper, times(1)).toDto(book1);
-        verify(bookMapper, times(1)).toDto(book2);
+        verify(bookMapper, times(1)).toDto(firstBookbook);
+        verify(bookMapper, times(1)).toDto(secondBook);
 
         List<BookDto> expected = List.of(bookDto1, bookDto2);
         assertEquals(actual, expected);

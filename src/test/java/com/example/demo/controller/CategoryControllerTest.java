@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import static org.apache.commons.lang3.builder.EqualsBuilder.reflectionEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -16,7 +18,6 @@ import java.util.Arrays;
 import java.util.List;
 import javax.sql.DataSource;
 import lombok.SneakyThrows;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,11 +32,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import org.testcontainers.shaded.org.apache.commons.lang3.builder.EqualsBuilder;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class CategoryControllerTest {
-
     private static MockMvc mockMvc;
 
     @Autowired
@@ -100,7 +99,7 @@ class CategoryControllerTest {
 
         CategoryDto actual = objectMapper.readValue(result.getResponse().getContentAsString(),
                 CategoryDto.class);
-        EqualsBuilder.reflectionEquals(expected, actual);
+        reflectionEquals(expected, actual);
     }
 
     @Sql(scripts = "classpath:database/delete-all-categories.sql",
@@ -136,8 +135,8 @@ class CategoryControllerTest {
         List<CategoryDto> actual = Arrays.stream(
                 objectMapper.readValue(result.getResponse().getContentAsByteArray(),
                         CategoryDto[].class)).toList();
-        Assertions.assertEquals(expected.size(), actual.size());
-        EqualsBuilder.reflectionEquals(expected, actual);
+        assertEquals(expected.size(), actual.size());
+        reflectionEquals(expected, actual);
     }
 
     @Sql(scripts = "classpath:database/delete-all-categories.sql",
@@ -164,7 +163,7 @@ class CategoryControllerTest {
                 .andReturn();
         CategoryDto actual = objectMapper.readValue(result.getResponse().getContentAsString(),
                 CategoryDto.class);
-        EqualsBuilder.reflectionEquals(expected, actual);
+        reflectionEquals(expected, actual);
     }
 
     @Sql(scripts = "classpath:database/delete-all-categories.sql",
@@ -204,7 +203,7 @@ class CategoryControllerTest {
         List<CategoryDto> actual = Arrays.stream(
                 objectMapper.readValue(result.getResponse().getContentAsByteArray(),
                         CategoryDto[].class)).toList();
-        Assertions.assertEquals(expected.size(), actual.size());
-        EqualsBuilder.reflectionEquals(expected,actual);
+        assertEquals(expected.size(), actual.size());
+        reflectionEquals(expected,actual);
     }
 }

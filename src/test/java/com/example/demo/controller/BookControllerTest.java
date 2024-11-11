@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
+import static org.apache.commons.lang3.builder.EqualsBuilder.reflectionEquals;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -10,7 +12,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.example.demo.dto.book.BookDto;
 import com.example.demo.dto.book.CreateBookRequestDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.transaction.Transactional;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -21,7 +22,6 @@ import java.util.Set;
 import javax.sql.DataSource;
 import lombok.SneakyThrows;
 import org.assertj.core.util.BigDecimalComparator;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,12 +36,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import org.testcontainers.shaded.org.apache.commons.lang3.builder.EqualsBuilder;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Transactional
 class BookControllerTest {
-
     protected static MockMvc mockMvc;
     @Autowired
     private ObjectMapper objectMapper;
@@ -58,10 +55,6 @@ class BookControllerTest {
         teardown(dataSource);
         try (Connection connection = dataSource.getConnection()) {
             connection.setAutoCommit(true);
-            ScriptUtils.executeSqlScript(
-                    connection,
-                    new ClassPathResource("database/add-three-books.sql")
-            );
         }
     }
 
@@ -79,39 +72,22 @@ class BookControllerTest {
     @Test
     @DisplayName("Create a new book")
     void createBook_ValidData_Success() throws Exception {
-        CreateBookRequestDto requestDto = new CreateBookRequestDto()
-                .setId(1L)
-                .setAuthor("Slava")
-                .setTitle("Testing")
-                .setIsbn("9834343")
-                .setPrice(BigDecimal.valueOf(5.5))
-                .setDescription("This for test")
-                .setCoverImage("/url")
-                .setCategoriesIds(Set.of(1L));
-
+        CreateBookRequestDto requestDto = TestUtil.createSampleCreateBookRequestDto();
         String jsonRequest = objectMapper.writeValueAsString(requestDto);
 
-        BookDto expected = new BookDto()
-                .setAuthor(requestDto.getAuthor())
-                .setIsbn(requestDto.getIsbn())
-                .setId(requestDto.getId())
-                .setPrice(requestDto.getPrice())
-                .setDescription(requestDto.getDescription())
-                .setTitle(requestDto.getTitle())
-                .setCoverImage(requestDto.getCoverImage())
-                .setCategoryIds(requestDto.getCategoriesIds());
+        BookDto expected = TestUtil.createExpectedBookDto(requestDto);
 
         MvcResult result = mockMvc.perform(
-                post("/books")
-                    .content(jsonRequest)
-                    .contentType(MediaType.APPLICATION_JSON)
+                        post("/books")
+                                .content(jsonRequest)
+                                .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isCreated())
                 .andReturn();
 
         BookDto actual = objectMapper.readValue(result.getResponse().getContentAsString(),
                 BookDto.class);
-        EqualsBuilder.reflectionEquals(expected, actual, "id");
+        reflectionEquals(expected, actual, "id");
     }
 
     @Sql(scripts = "classpath:database/delete-all-books.sql",
@@ -153,7 +129,7 @@ class BookControllerTest {
                         .getContentAsByteArray(), BookDto[].class))
                 .toList();
 
-        Assertions.assertEquals(expected.size(), actual.size());
+        assertEquals(expected.size(), actual.size());
         assertThat(actual)
                 .usingRecursiveComparison()
                 .withComparatorForType(new BigDecimalComparator(), BigDecimal.class)
@@ -185,7 +161,7 @@ class BookControllerTest {
         BookDto actual = objectMapper.readValue(result.getResponse()
                 .getContentAsString(), BookDto.class);
 
-        EqualsBuilder.reflectionEquals(actual, expected);
+        reflectionEquals(actual, expected);
     }
 
     @WithMockUser(username = "admin", roles = {"ADMIN", "USER"})
@@ -228,7 +204,34 @@ class BookControllerTest {
                 objectMapper.readValue(result.getResponse().getContentAsString(),
                         BookDto[].class)
         ).toList();
-        Assertions.assertEquals(expected.size(), actual.size());
-        EqualsBuilder.reflectionEquals(expected,actual);
+        assertEquals(expected.size(), actual.size());
+        reflectionEquals(expected,actual);
+    }
+
+    static class TestUtil {
+
+        static CreateBookRequestDto createSampleCreateBookRequestDto() {
+            return new CreateBookRequestDto()
+                    .setId(1L)
+                    .setAuthor("Slava")
+                    .setTitle("Testing")
+                    .setIsbn("9834343")
+                    .setPrice(BigDecimal.valueOf(5.5))
+                    .setDescription("This is for test")
+                    .setCoverImage("/url")
+                    .setCategoriesIds(Set.of(1L));
+        }
+
+        static BookDto createExpectedBookDto(CreateBookRequestDto requestDto) {
+            return new BookDto()
+                    .setId(requestDto.getId())
+                    .setAuthor(requestDto.getAuthor())
+                    .setTitle(requestDto.getTitle())
+                    .setIsbn(requestDto.getIsbn())
+                    .setPrice(requestDto.getPrice())
+                    .setDescription(requestDto.getDescription())
+                    .setCoverImage(requestDto.getCoverImage())
+                    .setCategoryIds(requestDto.getCategoriesIds());
+        }
     }
 }
