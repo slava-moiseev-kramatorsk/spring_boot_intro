@@ -17,7 +17,6 @@ import jakarta.persistence.EntityNotFoundException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -49,7 +48,7 @@ public class BookServiceImplTest {
         requestDto.setTitle("First_book_test");
         requestDto.setCategoriesIds(Collections.singleton(1L));
 
-        Book book = generateFirstBook();
+        Book book = TestUtilService.generateFirstBook();
 
         BookDto expected = new BookDto();
         expected.setId(1L);
@@ -70,7 +69,7 @@ public class BookServiceImplTest {
     @Test
     @DisplayName("Find book by valid id")
     public void findById_WithValidBookId_Ok() {
-        Book book = generateFirstBook();
+        Book book = TestUtilService.generateFirstBook();
 
         BookDto bookDto = new BookDto();
         bookDto.setId(book.getId());
@@ -92,14 +91,14 @@ public class BookServiceImplTest {
     @Test
     @DisplayName("Get all books from DB")
     public void findAllBooks_shouldReturnAllBook() {
-        Book firstBookbook = generateFirstBook();
+        Book firstBookbook = TestUtilService.generateFirstBook();
         BookDto bookDto1 = new BookDto();
         bookDto1.setTitle(firstBookbook.getTitle());
         bookDto1.setAuthor(firstBookbook.getAuthor());
         bookDto1.setCategoryIds(firstBookbook.getCategories().stream()
                 .map(Category::getId)
                 .collect(Collectors.toSet()));
-        Book secondBook = generateSecondBook();
+        Book secondBook = TestUtilService.generateSecondBook();
         BookDto bookDto2 = new BookDto();
         bookDto2.setAuthor(secondBook.getAuthor());
         bookDto2.setTitle(secondBook.getTitle());
@@ -147,28 +146,5 @@ public class BookServiceImplTest {
         bookService.deleteById(bookId);
 
         verify(bookRepository, times(1)).deleteById(bookId);
-    }
-
-    private Category generateCategory() {
-        Category category = new Category(1L);
-        category.setName("TestCategory");
-        return category;
-    }
-
-    private Book generateFirstBook() {
-        Book book = new Book();
-        book.setId(1L);
-        book.setAuthor("Slava");
-        book.setTitle("Random book");
-        book.setCategories(Set.of(generateCategory()));
-        return book;
-    }
-
-    private Book generateSecondBook() {
-        Book book = new Book();
-        book.setAuthor("Platon");
-        book.setTitle("Another");
-        book.setCategories(Set.of(generateCategory()));
-        return book;
     }
 }

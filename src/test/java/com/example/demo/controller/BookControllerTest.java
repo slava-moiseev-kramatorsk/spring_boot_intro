@@ -18,7 +18,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 import javax.sql.DataSource;
 import lombok.SneakyThrows;
 import org.assertj.core.util.BigDecimalComparator;
@@ -206,32 +205,5 @@ class BookControllerTest {
         ).toList();
         assertEquals(expected.size(), actual.size());
         reflectionEquals(expected,actual);
-    }
-
-    static class TestUtil {
-
-        static CreateBookRequestDto createSampleCreateBookRequestDto() {
-            return new CreateBookRequestDto()
-                    .setId(1L)
-                    .setAuthor("Slava")
-                    .setTitle("Testing")
-                    .setIsbn("9834343")
-                    .setPrice(BigDecimal.valueOf(5.5))
-                    .setDescription("This is for test")
-                    .setCoverImage("/url")
-                    .setCategoriesIds(Set.of(1L));
-        }
-
-        static BookDto createExpectedBookDto(CreateBookRequestDto requestDto) {
-            return new BookDto()
-                    .setId(requestDto.getId())
-                    .setAuthor(requestDto.getAuthor())
-                    .setTitle(requestDto.getTitle())
-                    .setIsbn(requestDto.getIsbn())
-                    .setPrice(requestDto.getPrice())
-                    .setDescription(requestDto.getDescription())
-                    .setCoverImage(requestDto.getCoverImage())
-                    .setCategoryIds(requestDto.getCategoriesIds());
-        }
     }
 }
