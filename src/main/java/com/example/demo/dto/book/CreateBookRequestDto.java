@@ -10,8 +10,10 @@ import jakarta.validation.constraints.Positive;
 import java.math.BigDecimal;
 import java.util.Set;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 @Data
+@Accessors(chain = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CreateBookRequestDto {
     private Long id;

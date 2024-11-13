@@ -10,6 +10,7 @@ import com.example.demo.repository.book.BookRepository;
 import com.example.demo.repository.book.BookSpecificationBuilder;
 import com.example.demo.repository.category.CategoryRepository;
 import jakarta.persistence.EntityNotFoundException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
@@ -27,8 +28,8 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto save(CreateBookRequestDto requestDto) {
-        Set<Category> categories = (Set<Category>) categoryRepository
-                .findAllById(requestDto.getCategoriesIds());
+        Set<Category> categories = new HashSet<>(categoryRepository
+                .findAllById(requestDto.getCategoriesIds()));
         Book book = bookMapper.toModel(requestDto);
         book.setCategories(categories);
         return bookMapper.toDto(bookRepository.save(book));
@@ -44,7 +45,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookDto findById(Long id) {
         Book book = bookRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException("Book with this id + " + id + "not found"));
+                () -> new EntityNotFoundException("Book with this id " + id + " not found"));
         return bookMapper.toDto(book);
     }
 
