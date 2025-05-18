@@ -143,6 +143,6 @@ For API description and usage, open the link in your browser
 
 5. API Testing
 
-Import the provided [Postman Collection](./Bookstore_API.postman_collection.json) to test API endpoints.
+Import the provided [Postman Collection](https://.postman.co/workspace/My-Workspace~0750f7c0-aec3-4052-85bf-d5e8b8680438/collection/36728804-8c10d1f4-94df-4951-8900-67b6cc2935d3?action=share&creator=36728804) to test API endpoints.
 
 
