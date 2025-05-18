@@ -32,7 +32,7 @@ public class OrderController {
 
     @Operation(summary = "Create order",
             description = "Create order for current user")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER')or hasRole('ADMIN')")
     @PostMapping
     public OrderResponseDto create(@RequestBody @Valid OrderRequestDto requestDto,
                                    Authentication authentication) {
@@ -42,7 +42,7 @@ public class OrderController {
 
     @Operation(summary = "Create order",
             description = "Create order for current user")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('USER')or hasRole('ADMIN')")
     @PatchMapping("/{id}")
     public OrderResponseDto updateOrder(@RequestBody @Valid OrderUpdateDto updateDto,
                                         @PathVariable Long orderId) {
@@ -52,7 +52,7 @@ public class OrderController {
     @Operation(summary = "Find order",
             description = "Find order for current user")
     @GetMapping
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('USER')or hasRole('ADMIN')")
     public List<OrderResponseDto> findByUser(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         return orderService.findByUser(user);
@@ -60,7 +60,7 @@ public class OrderController {
 
     @Operation(summary = "Get items",
             description = "Get item from current order")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER')or hasRole('ADMIN')")
     @GetMapping("{orderId}/items/{itemId}")
     public OrderItemDto getOrderItem(@PathVariable @Positive Long orderId,
                                      @PathVariable @Positive Long itemId) {
