@@ -4,7 +4,7 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
 public class AuthorValidator implements ConstraintValidator<Author, String> {
-    private static final String REGEX_AUTHOR_NAME = "[A-Za-z]+";
+    private static final String REGEX_AUTHOR_NAME = "^[A-Z][a-z]+(\\s[A-Z][a-z]+)?$";
     private static final int VALID_LENGTH_NAME = 30;
     private static final int INDEX_OF_FIRST_LETTER = 0;
 
