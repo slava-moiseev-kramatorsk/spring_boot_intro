@@ -8,7 +8,7 @@ databaseChangeLog:
             columns:
               - column: { name: email, value: "admin@gmail.com" }
               - column: { name: password,
-                          value: "rfrfitxrf"}
+                          value: "$2a$12$iRjUKFpY2dmmd3caPEIZl.NjgjDsxDiZiLCdSSgE3OYlHi9Sz7Kqa"}
               - column: { name: first_name, value: "Admin"}
               - column: { name: last_name, value: "Admin"}
               - column: { name: shipping_address, value: "cherkasy"}

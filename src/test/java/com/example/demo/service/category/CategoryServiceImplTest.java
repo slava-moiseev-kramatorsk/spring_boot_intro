@@ -49,6 +49,7 @@ class CategoryServiceImplTest {
         expected.setId(createCategoryDto.id());
 
         when(categoryMapper.toModel(createCategoryDto)).thenReturn(category);
+        when(categoryRepository.save(category)).thenReturn(category);
         when(categoryMapper.toDto(category)).thenReturn(expected);
 
         CategoryDto actual = categoryService.save(createCategoryDto);

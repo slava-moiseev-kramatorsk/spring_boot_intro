@@ -4,7 +4,7 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
 public class TitleValidation implements ConstraintValidator<Title, String> {
-    private static final String REGEX_TITLE = "^[a-zA-Z0-9]+$";
+    private static final String REGEX_TITLE = "^[a-zA-Z0-9\\s]+$";
     private static final int REGEX_VALID_TITLE_LENGTH = 50;
 
     @Override
